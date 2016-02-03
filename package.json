@@ -1,0 +1,36 @@
+{
+  "name": "slushbot",
+  "version": "1.0.0",
+  "description": "Part Bot, Part Slash Command, Part who knows what?",
+  "main": "index.js",
+  "contributors": [
+    {
+      "name": "Kristen Mills",
+      "email": "kriten@kristen-mills.com"
+    }
+  ],
+  "scripts": {
+    "lint": "eslint ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rit-sse/slushbot.git"
+  },
+  "author": "Society of Software Engineers",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rit-sse/slushbot/issues"
+  },
+  "homepage": "https://github.com/rit-sse/slushbot#readme",
+  "devDependencies": {
+    "babel-eslint": "^4.1.8",
+    "eslint": "^1.10.3",
+    "sse-eslint": "github:rit-sse/eslint"
+  },
+  "dependencies": {
+    "babel": "^6.3.26",
+    "babel-cli": "^6.4.5",
+    "babel-core": "^6.4.5",
+    "babel-preset-es2015": "^6.3.13"
+  }
+}
