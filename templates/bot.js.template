@@ -1,0 +1,14 @@
+'use strict';
+
+import MatcherRegister from '../../matcher-register';
+
+const matcher = {
+  name: '%NAME%',
+  help: {
+  },
+
+  match(controller) {
+  },
+};
+
+MatcherRegister.registerBot(matcher);

@@ -11,7 +11,8 @@
   ],
   "scripts": {
     "lint": "eslint .",
-    "start": "babel-node index.js"
+    "start": "babel-node index.js",
+    "create": "babel-node create-script.js"
   },
   "repository": {
     "type": "git",
@@ -26,7 +27,8 @@
   "devDependencies": {
     "babel-eslint": "^4.1.8",
     "eslint": "^1.10.3",
-    "sse-eslint": "github:rit-sse/eslint"
+    "sse-eslint": "github:rit-sse/eslint",
+    "yargs": "^3.32.0"
   },
   "dependencies": {
     "babel": "^6.3.26",
