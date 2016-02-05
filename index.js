@@ -1,16 +1,28 @@
 'use strict';
 
 import Botkit from 'botkit';
+import redisStore from './storage/redis';
 
 if (!process.env.token) {
   throw new Error('Error: Specify token in environment');
 }
 
 const controller = Botkit.slackbot({
-  debug: true,
+  debug: false,
+  storage: redisStore(),
 });
 
-controller.spawn({ token: process.env.token }).startRTM(err => {
+const slushbot = controller.spawn({ token: process.env.token });
+
+slushbot.api.team.info({}, (err, res) => {
+  if (err) {
+    throw new Error(err);
+  }
+
+  controller.saveTeam(res.team, () => controller.log('Stored Team Information'));
+});
+
+slushbot.startRTM(err => {
   if (err) {
     throw new Error(err);
   }
