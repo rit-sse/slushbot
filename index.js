@@ -2,6 +2,8 @@
 
 import Botkit from 'botkit';
 import redisStore from './storage/redis';
+import slashMatchers from './matchers/slash';
+import botMatchers from './matchers/bot';
 
 if (!process.env.token) {
   throw new Error('Error: Specify token in environment');
@@ -35,5 +37,9 @@ controller.setupWebserver(process.env.port || 3000, (err, expressWebserver) => {
 
   controller.createWebhookEndpoints(expressWebserver);
 });
+
+controller.on('slash_command', (bot, message) => slashMatchers.forEach(matcher => matcher.match(bot, message)));
+
+botMatchers.forEach(matcher => matcher.match(controller));
 
 export default controller;
