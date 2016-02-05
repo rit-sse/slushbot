@@ -2,12 +2,14 @@
 
 import Botkit from 'botkit';
 import redisStore from './storage/redis';
-import slashMatchers from './matchers/slash';
-import botMatchers from './matchers/bot';
+import Matchers from './src/matcher_register';
+import setupMatchers from './src/matchers';
 
 if (!process.env.token) {
   throw new Error('Error: Specify token in environment');
 }
+
+setupMatchers();
 
 const controller = Botkit.slackbot({
   debug: false,
@@ -38,8 +40,8 @@ controller.setupWebserver(process.env.port || 3000, (err, expressWebserver) => {
   controller.createWebhookEndpoints(expressWebserver);
 });
 
-controller.on('slash_command', (bot, message) => slashMatchers.forEach(matcher => matcher.match(bot, message)));
+controller.on('slash_command', (bot, message) => Object.values(Matchers.slash).forEach(matcher => matcher.match(bot, message)));
 
-botMatchers.forEach(matcher => matcher.match(controller));
+Object.values(Matchers.bot).forEach(matcher => matcher.match(controller));
 
 export default controller;
