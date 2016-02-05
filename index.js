@@ -2,7 +2,7 @@
 
 import Botkit from 'botkit';
 import redisStore from './storage/redis';
-import Matchers from './src/matcher_register';
+import Matchers from './src/matcher-register';
 import setupMatchers from './src/matchers';
 
 if (!process.env.token) {

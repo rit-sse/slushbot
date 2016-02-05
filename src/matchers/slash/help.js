@@ -1,6 +1,6 @@
 'use strict';
 
-import MatcherRegister from '../../matcher_register';
+import MatcherRegister from '../../matcher-register';
 
 const matcher = {
   name: 'help',
