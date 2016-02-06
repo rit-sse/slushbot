@@ -20,7 +20,7 @@ After you set those up, run the bot
 *Note*: This bot needs to be publically accessable for the slash commands to work so open up the port or deploy it somewhere.
 
 * `npm install`
-* `token=[YOUR SLACK BOT TOKEN] npm start`
+* `SLACK_TOKEN=[YOUR SLACK BOT TOKEN] npm start`
 
 If you go to your slack team, you should see the bot user is online and you are able to run the existing slash commands
 

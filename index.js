@@ -5,7 +5,7 @@ import redisStore from './storage/redis';
 import Matchers from './src/matcher-register';
 import setupMatchers from './src/matchers';
 
-if (!process.env.token) {
+if (!process.env.SLACK_TOKEN) {
   throw new Error('Error: Specify token in environment');
 }
 
@@ -16,7 +16,7 @@ const controller = Botkit.slackbot({
   storage: redisStore(),
 });
 
-const slushbot = controller.spawn({ token: process.env.token });
+const slushbot = controller.spawn({ token: process.env.SLACK_TOKEN });
 
 slushbot.api.team.info({}, (err, res) => {
   if (err) {
