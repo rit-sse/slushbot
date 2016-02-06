@@ -1,0 +1,6 @@
+{
+  "SLACK_SLASH_TOKEN": "TOKEN",
+  "SLACK_BOT_TOKEN": "TOKEN",
+  "API_ROOT": "http://localhost:PORT/api/v1/",
+  "SLACK_SECRET": "my_super_secret"
+}

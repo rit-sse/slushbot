@@ -8,18 +8,28 @@ Part Bot, Part Slash Command, Part who knows what?
 
 ### Getting Started
 
+#### Slack
 The only way to really test out things right now is to really use it in slack so I recommend creating a slack team for yourself to use for testing. I'm going to try to figure out a local solution later.
 
 For this slack team, you will need to add 2 integrations:
 * A Slash command `/sse`
 * A bot user
 
-After you set those up, run the bot
+
+#### Node API
+If you are doing SSE commands, you will probably need the API running locally. Follow the instructions on that [repo](https://github.com/rit-sse/node-api) to get it set
+up.
+
+#### Slushbot
+
+Make a copy of config/config.example.json and save it as config/config.json. Update it accordingingly.
+
+After you set that up, run the bot
 
 *Note*: This bot needs to be publically accessable for the slash commands to work so open up the port or deploy it somewhere.
 
 * `npm install`
-* `SLACK_TOKEN=[YOUR SLACK BOT TOKEN] npm start`
+* `npm start`
 
 If you go to your slack team, you should see the bot user is online and you are able to run the existing slash commands
 

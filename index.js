@@ -4,8 +4,9 @@ import Botkit from 'botkit';
 import redisStore from './storage/redis';
 import Matchers from './src/matcher-register';
 import setupMatchers from './src/matchers';
+import nconf from './config';
 
-if (!process.env.SLACK_BOT_TOKEN || !process.env.SLACK_SLASH_TOKEN) {
+if (!nconf.get('SLACK_BOT_TOKEN') || !nconf.get('SLACK_SLASH_TOKEN')) {
   throw new Error('Error: Specify slack tokens in environment');
 }
 
@@ -13,10 +14,10 @@ setupMatchers();
 
 const controller = Botkit.slackbot({
   debug: false,
-  storage: redisStore({ url: process.env.REDIS_URL }),
+  storage: redisStore({ url: nconf.get('REDIS_URL') }),
 });
 
-const slushbot = controller.spawn({ token: process.env.SLACK_BOT_TOKEN });
+const slushbot = controller.spawn({ token: nconf.get('SLACK_BOT_TOKEN') });
 
 slushbot.api.team.info({}, (err, res) => {
   if (err) {
@@ -32,7 +33,7 @@ slushbot.startRTM(err => {
   }
 });
 
-controller.setupWebserver(process.env.PORT || 3000, (err, expressWebserver) => {
+controller.setupWebserver(nconf.get('PORT') || 3000, (err, expressWebserver) => {
   if (err) {
     throw new Error(err);
   }
@@ -41,7 +42,7 @@ controller.setupWebserver(process.env.PORT || 3000, (err, expressWebserver) => {
 });
 
 controller.on('slash_command', (bot, message) => {
-  if (message.token === process.env.SLACK_SLASH_TOKEN) {
+  if (message.token === nconf.get('SLACK_SLASH_TOKEN')) {
     Object.values(Matchers.slash).forEach(matcher => matcher.match(bot, message));
   }
 });
