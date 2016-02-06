@@ -13,7 +13,7 @@ setupMatchers();
 
 const controller = Botkit.slackbot({
   debug: false,
-  storage: redisStore(),
+  storage: redisStore({ url: process.env.REDIS_URL }),
 });
 
 const slushbot = controller.spawn({ token: process.env.SLACK_TOKEN });
