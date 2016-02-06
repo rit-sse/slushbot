@@ -32,7 +32,7 @@ slushbot.startRTM(err => {
   }
 });
 
-controller.setupWebserver(process.env.port || 3000, (err, expressWebserver) => {
+controller.setupWebserver(process.env.PORT || 3000, (err, expressWebserver) => {
   if (err) {
     throw new Error(err);
   }
