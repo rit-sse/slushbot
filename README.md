@@ -9,7 +9,7 @@ Part Bot, Part Slash Command, Part who knows what?
 ### Getting Started
 
 #### Slack
-The only way to really test out things right now is to really use it in slack so I recommend creating a slack team for yourself to use for testing. I'm going to try to figure out a local solution later.
+The best way to really test out things right now is to really use it in slack so I recommend creating a slack team for yourself to use for testing.
 
 For this slack team, you will need to add 2 integrations:
 * A Slash command `/sse`
@@ -26,12 +26,16 @@ Make a copy of config/config.example.json and save it as config/config.json. Upd
 
 After you set that up, run the bot
 
-*Note*: This bot needs to be publically accessable for the slash commands to work so open up the port or deploy it somewhere.
-
 * `npm install`
 * `npm start`
 
 If you go to your slack team, you should see the bot user is online and you are able to run the existing slash commands
+
+#### Local Testing
+
+So the bot needs to be publically accessable for the slash commands to work so open up the port or deploy it somewhere. Since that's annoying, I've set up a way to test your slash commands in your terminal. *NOTE*: This won't work for bot commands, but bot commands work in slack without the bot being publically accessable so actually test those in slack.
+
+* `SLACK_USER_ID='your user id' npm run test-bot`
 
 ### Creating a New Command
 
