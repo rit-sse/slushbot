@@ -2,22 +2,22 @@
 
 import Botkit from 'botkit';
 import redisStore from './storage/redis';
-import Matchers from './src/matcher-register';
-import setupMatchers from './src/matchers';
+import Matchers from './matcher-register';
+import setupMatchers from './matchers';
 import nconf from './config';
 
 if (!nconf.get('SLACK_BOT_TOKEN') || !nconf.get('SLACK_SLASH_TOKEN')) {
   throw new Error('Error: Specify slack tokens in environment');
 }
 
-setupMatchers();
-
 const controller = Botkit.slackbot({
   debug: false,
   storage: redisStore({ url: nconf.get('REDIS_URL') }),
 });
 
-const slushbot = controller.spawn({ token: nconf.get('SLACK_BOT_TOKEN') });
+export const slushbot = controller.spawn({ token: nconf.get('SLACK_BOT_TOKEN') });
+
+setupMatchers();
 
 slushbot.api.team.info({}, (err, res) => {
   if (err) {

@@ -6,7 +6,7 @@ import fs from 'fs';
 if (!argv.name || !(argv.type === 'bot' || argv.type === 'slash')) {
   console.log('Name and type are required');
 } else {
-  const filePath = `src/matchers/${argv.type}/${argv.name.replace(' ', '-')}.js`;
+  const filePath = `matchers/${argv.type}/${argv.name.replace(' ', '-')}.js`;
   fs.stat(filePath, err => {
     if (err) {
       fs.readFile(`templates/${argv.type}.js.template`, 'utf-8', (e, data) => {
