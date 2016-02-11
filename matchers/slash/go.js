@@ -27,7 +27,6 @@ const matcher = {
       // the slack web api
       slushbot.api.users.info({ user: message.user_id }, (err, res) => {
         if (err) {
-          console.log(err);
           return bot.replyPrivate(message, 'There was an error getting your user information');
         }
 

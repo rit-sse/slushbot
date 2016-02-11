@@ -27,7 +27,7 @@ const matcher = {
   },
 
   match(bot, message) {
-    const match = message.text.match(/mail (subscribe|unsubscribe)\w?(.*)/);
+    const match = message.text.match(/mail (subscribe|unsubscribe)\s?(.*)/);
     if (match) {
       const url = `https://anystring:${nconf.get('MAILCHIMP_KEY')}@us2.api.mailchimp.com/3.0/lists/${nconf.get('MAILCHIMP_LIST_ID')}/members`;
       slushbot.api.users.info({ user: message.user_id }, (err, res) => {
