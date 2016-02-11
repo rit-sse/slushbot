@@ -53,9 +53,62 @@ const matcher = {
         if (!matchEmail) {
           return bot.replyPrivate(message, 'Not a valid RIT email. Change your email if you wish to run authed commands');
         }
+        const add = {
+          questions: {
+            body: 'What\'s the quote?',
+            description: 'What\'s the description? (Say \'none\' if you don\'t want to include one)',
+            tags: 'What tag\'s do you want to add (space seperated)',
+          },
 
-        Auth
-          .getToken('slack', matchEmail[1], nconf.get('SLACK_SECRET'));
+          startConversation() {
+            bot.replyPrivate(message, 'Go to your direct message with me to continue adding the quote');
+            slushbot.startPrivateConversation(message, add.askBody);
+          },
+
+          askBody(response, convo) {
+            convo.ask(add.questions.body, (r, c) => {
+              add.askDescription(r, c);
+              c.next();
+            });
+          },
+
+          askDescription(response, convo) {
+            convo.ask(add.questions.description, (r, c) => {
+              add.askTags(r, c);
+              c.next();
+            });
+          },
+
+          askTags(response, convo) {
+            convo.ask(add.questions.tags, (r, c) => {
+              c.next();
+              add.handleResponses(c);
+            });
+          },
+
+          handleResponses(convo) {
+            const responses = convo.extractResponses();
+            const quote = {
+              body: responses[add.questions.body],
+              description: responses[add.questions.description],
+              tags: responses[add.questions.tags].split(' '),
+            };
+            if (quote.description === 'none') {
+              quote.description = '';
+            }
+            return Quotes
+              .create(quote)
+              .then(() => convo.say('Successfully submitted a quote. It will be visible pending moderation'))
+              .catch(e => convo.say(`Error submitted quote - ${e.message}`));
+          },
+        };
+
+        const convoFn = subcommand === 'add' ? add.startConversation : this.startApproveConversation;
+
+        return Auth
+          .getToken('slack', matchEmail[1], nconf.get('SLACK_SECRET'))
+          .then(convoFn)
+          .catch(e => console.log(e));
       });
     }
   },
