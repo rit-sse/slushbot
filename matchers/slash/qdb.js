@@ -103,11 +103,83 @@ const matcher = {
           },
         };
 
-        const convoFn = subcommand === 'add' ? add.startConversation : this.startApproveConversation;
+        const approve = {
+          startConversation() {
+            bot.replyPrivate(message, 'Go to your direct message with me to approve quotes');
+            slushbot.startPrivateConversation(message, approve.promptQuotes);
+          },
+
+          promptQuotes(response, convo) {
+            Quotes
+              .all({ approved: 'null' }, true)
+              .then(quotes => approve.askQuote(quotes, convo))
+              .catch(() => {
+                convo.say('You don\'t have permission for that #tricked');
+                convo.next();
+              });
+          },
+
+          askQuote(quotes, convo) {
+            const quote = quotes[0];
+            convo.ask(`Would you like to approve\n ${quote.body}\n Description: ${quote.description}\n Tags: ${quote.tags.map(tag => tag.name).join(', ')}`, [
+              {
+                pattern: 'skip',
+                callback(r, c) {
+                  c.say('Skipping quote');
+                  quotes.shift();
+                  if (quotes.length !== 0) {
+                    approve.askQuote(quotes, c);
+                  }
+                  c.next();
+                },
+              },
+              {
+                pattern: slushbot.utterances.yes,
+                callback(r, c) {
+                  Quotes
+                    .update(quote.id, { approved: true })
+                    .then(() => {
+                      c.say('Quote approved');
+                      quotes.shift();
+                      if (quotes.length !== 0) {
+                        approve.askQuote(quotes, c);
+                      }
+                      c.next();
+                    })
+                    .catch(() => {
+                      c.say('There was a problem approving this quote');
+                      c.next();
+                    });
+                },
+              },
+              {
+                pattern: slushbot.utterances.no,
+                callback(r, c) {
+                  Quotes
+                    .update(quote.id, { approved: false })
+                    .then(() => {
+                      c.say('Quote rejected');
+                      quotes.shift();
+                      if (quotes.length !== 0) {
+                        approve.askQuote(quotes, c);
+                      }
+                      c.next();
+                    })
+                    .catch(() => {
+                      c.say('There was a problem rejecting this quote');
+                      c.next();
+                    });
+                },
+              },
+            ]);
+          },
+        };
+
+        const { startConversation } = subcommand === 'add' ? add : approve;
 
         return Auth
           .getToken('slack', matchEmail[1], nconf.get('SLACK_SECRET'))
-          .then(convoFn)
+          .then(startConversation)
           .catch(e => console.log(e));
       });
     }
