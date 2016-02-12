@@ -23,7 +23,7 @@ const matcher = {
     if (matchCommand) {
       const [, subcommand, commandArgs] = matchCommand;
       if (subcommand === 'quote') {
-        const argMatch = commandArgs.match(/#(\d+)|(\w+)/);
+        const argMatch = commandArgs.match(/#(\d+)|([\w-_]+)/);
         if (argMatch) {
           if (argMatch[1]) {
             return Quotes
