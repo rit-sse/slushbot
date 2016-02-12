@@ -11,7 +11,7 @@ const matcher = {
     '/sse qdb quote [tag]': 'Return a random quote for a tag',
     '/sse qdb quote #[id]': 'Return a specific quote',
     '/sse qdb add': 'Add a quote in a private conversation with slushbot',
-    '/sse qdb qpprove': 'Approve quotes in a private conversation with slushbot',
+    '/sse qdb approve': 'Approve quotes in a private conversation with slushbot',
   },
 
   match(bot, message) {
