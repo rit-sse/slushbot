@@ -112,7 +112,14 @@ const matcher = {
           promptQuotes(response, convo) {
             Quotes
               .all({ approved: 'null' }, true)
-              .then(quotes => approve.askQuote(quotes, convo))
+              .then(quotes => {
+                if (quotes.length === 0) {
+                  convo.say('No quotes to approve');
+                  convo.next();
+                } else {
+                  approve.askQuote(quotes, convo);
+                }
+              })
               .catch(() => {
                 convo.say('You don\'t have permission for that #tricked');
                 convo.next();
