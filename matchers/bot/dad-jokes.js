@@ -10,7 +10,7 @@ const matcher = {
 
   match(controller) {
     controller.hears("I['|’]m (.+)", 'ambient', (bot, message) => {
-      const trigger = message.text
+      const trigger = message.text;
       const words = trigger.split(' ');
       if(words[0] === "I'm"){
         bot.reply(message, `Hi ${message.match[1]}, I'm Slushbot!`);
