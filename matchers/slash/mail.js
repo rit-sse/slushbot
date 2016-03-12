@@ -1,5 +1,3 @@
-'use strict';
-
 import MatcherRegister from '../../matcher-register';
 import { slushbot } from '../../bot';
 import nconf from '../../config';
@@ -80,7 +78,7 @@ const matcher = {
               .then(parseJSON);
             })
             .then(() => bot.replyPrivate(message, `Successfully subscribed ${email} to mailing list`))
-            .catch(() => bot.replyPrivate(message, `Error Subscribing you to mailing list. You are probably already subscribed.`));
+            .catch(() => bot.replyPrivate(message, 'Error Subscribing you to mailing list. You are probably already subscribed.'));
         } else {
           fetch(memberUrl, {
             method: 'PATCH',

@@ -1,5 +1,3 @@
-'use strict';
-
 import API from 'sse-api-client';
 import nconf from './config';
 

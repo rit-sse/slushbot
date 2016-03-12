@@ -1,5 +1,3 @@
-'use strict';
-
 import MatcherRegister from '../../matcher-register';
 import getAPI from '../../api';
 import { slushbot } from '../../bot';

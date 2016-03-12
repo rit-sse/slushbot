@@ -1,5 +1,3 @@
-'use strict';
-
 import bot from './bot';
 import slash from './slash';
 

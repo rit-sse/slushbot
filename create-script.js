@@ -1,5 +1,3 @@
-'use strict';
-
 import { argv } from 'yargs';
 import fs from 'fs';
 

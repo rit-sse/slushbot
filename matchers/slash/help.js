@@ -1,5 +1,3 @@
-'use strict';
-
 import MatcherRegister from '../../matcher-register';
 
 const matcher = {
@@ -14,15 +12,11 @@ const matcher = {
     if (match) {
       if (!match[1]) {
         let helpText = Object.values(MatcherRegister.slash).reduce((string, m) => {
-          let str = string;
-          Object.entries(m.help).forEach(entry => str += `*${entry[0]}* - ${entry[1]}\n`);
-          return str;
+          return Object.entries(m.help).reduce((str, entry) => str + `*${entry[0]}* - ${entry[1]}\n`, string);
         }, '');
         helpText += '---\n';
         helpText += Object.values(MatcherRegister.bot).reduce((string, m) => {
-          let str = string;
-          Object.entries(m.help).forEach(entry => str += `*${entry[0]}* - ${entry[1]}\n`);
-          return str;
+          return Object.entries(m.help).reduce((str, entry) => str + `*${entry[0]}* - ${entry[1]}\n`, string);
         }, '');
         bot.replyPrivate(message, helpText);
       } else {

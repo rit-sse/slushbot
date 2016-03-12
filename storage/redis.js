@@ -1,5 +1,3 @@
-'use strict';
-
 import redis from 'redis';
 
 function createForMethod(method, client, config) {

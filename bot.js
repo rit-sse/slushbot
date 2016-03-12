@@ -1,5 +1,3 @@
-'use strict';
-
 import Botkit from 'botkit';
 import redisStore from './storage/redis';
 import Matchers from './matcher-register';

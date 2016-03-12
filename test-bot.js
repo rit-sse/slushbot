@@ -1,5 +1,3 @@
-'use strict';
-
 import setupMatchers from './matchers';
 import Matchers from './matcher-register';
 import readline from 'readline';
