@@ -6,7 +6,7 @@ let client = redis.createClient('redis://' + nconf.get('REDIS_PORT_6379_TCP_ADDR
 
 let subs = {};
 
-client.subscribe('test');
+client.subscribe('dockerbuilds');
 client.on("message", (chan, msg) => {
   for(let key in subs) {
     subs[key].reply({ channel: key }, msg);
