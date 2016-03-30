@@ -4,13 +4,15 @@ import Matchers from './matcher-register';
 import setupMatchers from './matchers';
 import nconf from './config';
 
+console.log('redis://' + nconf.get('REDIS_PORT_6379_TCP_ADDR') + ':6379');
+
 if (!nconf.get('SLACK_BOT_TOKEN') || !nconf.get('SLACK_SLASH_TOKEN')) {
   throw new Error('Error: Specify slack tokens in environment');
 }
 
 const controller = Botkit.slackbot({
   debug: false,
-  storage: redisStore({ url: nconf.get('REDIS_URL') }),
+  storage: redisStore({ url: 'redis://' + nconf.get('REDIS_PORT_6379_TCP_ADDR') + ':6379' }),
 });
 
 export const slushbot = controller.spawn({ token: nconf.get('SLACK_BOT_TOKEN') });
