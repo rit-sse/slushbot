@@ -12,7 +12,6 @@ const matcher = {
   match(bot, message) {
     const api = getAPI();
     const { Links, Auth } = api;
-
     const matchCommand = message.text.match(/go (.+) (.+)/);
 
     if (matchCommand) {
