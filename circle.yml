@@ -1,14 +1,25 @@
 machine:
-  node:
-    version: 5.1.0
+  services:
+    - docker
 
 test:
+  pre:
+    - docker login -u $DOCKER_USER -p $DOCKER_PASS -e tech@sse.rit.edu
+    - docker run --name redis -d redis
+    - docker build -t ritsse/slushbot:$CIRCLE_BRANCH .
   override:
-    - npm run lint
+    - docker run -it -v testkeys:/app/keys ritsse/slushbot:$CIRCLE_BRANCH npm run lint
+    - docker run -it -v testkeys:/app/keys --link redis ritsse/slushbot:$CIRCLE_BRANCH npm run test 
 
 deployment:
+  development:
+    branch: devlop
+    commands:
+      - docker push ritsse/slushbot:$CIRCLE_BRANCH
   master:
     branch: master
     owner: rit-sse
     commands:
-      - ssh deploy@$SSE_HOST 'cd /docker && docker-compose restart slushbot nginx'
+      - docker tag ritsse/slushbot:$CIRCLE_BRANCH ritsse/slushbot
+      - docker push ritsse/slushbot 
+
