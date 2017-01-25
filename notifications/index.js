@@ -9,7 +9,7 @@ export default function registerNotifications() {
     },
     body: JSON.stringify({
       token: nconf.get('SLACK_BOT_TOKEN'),
-      channel: 'sse-tech',
+      channel: 'C07RYN2JZ',
       text: 'Hi guys, I\'m alive',
     }),
   })
