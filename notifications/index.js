@@ -1,18 +1,13 @@
-import fetch from 'node-fetch';
-import nconf from '../config';
 
-export default function registerNotifications() {
-  fetch('https://slack.com/api/chat.postMessage', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      token: nconf.get('SLACK_BOT_TOKEN'),
-      channel: 'C07RYN2JZ',
-      text: 'Hi guys, I\'m alive',
-    }),
-  })
-  .then(() => console.log('done'))
-  .catch(err => console.log(err));
+export default function registerNotifications(slushbot) {
+  slushbot.api.chat.postMessage({
+    text: 'Did it work?',
+    channel: 'sse-tech',
+  }, (err, res) => {
+    if (!err) {
+      console.log(res);
+    } else {
+      console.log(err);
+    }
+  });
 }

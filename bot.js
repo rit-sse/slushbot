@@ -17,7 +17,7 @@ const controller = Botkit.slackbot({
 export const slushbot = controller.spawn({ token: nconf.get('SLACK_BOT_TOKEN') });
 
 setupMatchers();
-registerNotifications();
+registerNotifications(slushbot);
 
 slushbot.api.team.info({}, (err, res) => {
   if (err) {
