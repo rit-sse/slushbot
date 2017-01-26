@@ -1,5 +1,5 @@
 import {
-  createClient
+  createClient,
 } from 'redis';
 
 export default function registerNotifications(slushbot) {
@@ -8,7 +8,7 @@ export default function registerNotifications(slushbot) {
     slushbot.api.chat.postMessage({
       text: msg,
       channel: 'sse-tech',
-      as_user: true
+      as_user: true,  // eslint-disable-line camelcase
     }, (err, res) => {
       if (!err) {
         console.log(res);
