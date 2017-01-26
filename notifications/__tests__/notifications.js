@@ -16,7 +16,7 @@ function addChannel(name, client) {
 
 describe('Notifications', () => {
 
-  const client = createClient();
+  const client = createClient('redis://redis:6379');
 
   beforeAll(() => {
     client.flushall();
