@@ -1,7 +1,9 @@
-import redis from 'redis';
+import {
+  createClient
+} from 'redis';
 
 export default function registerNotifications(slushbot) {
-  const client = redis.Client('redis://redis:6379');
+  const client = createClient('redis://redis:6379');
   client.on('message', (chan, msg) => {
     slushbot.api.chat.postMessage({
       text: msg,
