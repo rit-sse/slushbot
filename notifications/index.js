@@ -2,9 +2,6 @@ import {
   createClient,
 } from 'redis';
 
-const client = createClient('redis://redis:6379');
-const sub = createClient('redis://redis:6379');
-
 function sendMessageToChannel(text, channel, slushbot) {
   console.log('sending to: ' + channel);
   slushbot.api.chat.postMessage({
@@ -35,6 +32,8 @@ export function fetchChannelList(redis) {
 }
 
 export default function registerNotifications(slushbot) {
+  const sub = createClient('redis://redis:6379');
+  const client = createClient('redis://redis:6379');
   sub.on('message', (chan, msg) => {
     console.log('notification on events: ' + msg);
     fetchChannelList(client)

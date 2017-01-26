@@ -23,7 +23,7 @@ describe('Notifications', () => {
   });
 
   afterAll(() => {
-    client.end(true);
+    client.quit();
   });
 
   it('should return no channels', () => {
