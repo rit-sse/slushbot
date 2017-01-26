@@ -7,7 +7,6 @@ const matcher = {
   },
 
   match(controller) {
-    console.log('Init?');
     controller.hears("I['|’]m (.+)", 'ambient', (bot, message) => {
       bot.reply(message, `Hi ${message.match[1]}, I'm Slushbot!`);
     });

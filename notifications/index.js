@@ -2,7 +2,11 @@ import {
   createClient,
 } from 'redis';
 
+const client = createClient('redis://redis:6379');
+const sub = createClient('redis://redis:6379');
+
 function sendMessageToChannel(text, channel, slushbot) {
+  console.log('sending to: ' + channel);
   slushbot.api.chat.postMessage({
     text,
     channel,
@@ -16,9 +20,10 @@ function sendMessageToChannel(text, channel, slushbot) {
   });
 }
 
-export function fetchChannelList(client) {
+export function fetchChannelList(redis) {
+  console.log('fetching channels for events');
   return new Promise((accept, reject) => {
-    client.keys('events::*', (err, values) => {
+    redis.keys('events::*', (err, values) => {
       if (!err) {
         const names = values.map(keyname => keyname.split('::')[1]);
         accept(names);
@@ -30,15 +35,17 @@ export function fetchChannelList(client) {
 }
 
 export default function registerNotifications(slushbot) {
-  const client = createClient('redis://redis:6379');
-  client.on('message', (chan, msg) => {
+  sub.on('message', (chan, msg) => {
+    console.log('notification on events: ' + msg);
     fetchChannelList(client)
       .then(channels => {
-        for (channel in channels) {
+        console.log('channel list: ' + channels);
+        channels.map(channel => {
           sendMessageToChannel(msg, channel, slushbot);
-        }
-      });
+        });
+      })
+      .catch(err => console.err(err));
   });
   // Sub
-  client.subscribe('events');
+  sub.subscribe('events');
 }
