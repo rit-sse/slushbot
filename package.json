@@ -7,13 +7,18 @@
     {
       "name": "Kristen Mills",
       "email": "kriten@kristen-mills.com"
+    },
+    {
+      "name": "Michael Timbrook",
+      "email": "isbetter@timbrook.im"
     }
   ],
   "scripts": {
     "lint": "eslint .",
     "start": "babel-node bot.js",
     "create": "babel-node create-script.js",
-    "test-bot": "babel-node test-bot.js"
+    "test-bot": "babel-node test-bot.js",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -38,10 +43,12 @@
     "babel-core": "^6.4.5",
     "babel-preset-es2015": "^6.3.13",
     "botkit": "0.0.5",
+    "jest": "^18.1.0",
     "nconf": "^0.8.4",
     "node-fetch": "^1.3.3",
     "redis": "^2.4.2",
     "require-dir": "^0.3.0",
+    "should": "^11.1.2",
     "sse-api-client": "github:rit-sse/api-client"
   }
 }
