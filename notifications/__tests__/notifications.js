@@ -1,12 +1,12 @@
 import { fetchChannelList } from '../';
 import { createClient } from 'redis';
-import should from 'should';
+import 'should';
 
 function addChannel(name, client) {
   return new Promise((acc, rej) => {
-    client.set('events::' + name, true, (err) => {
+    client.set('events::' + name, true, err => {
       if (!err) {
-        acc()
+        acc();
       } else {
         rej();
       }
@@ -29,7 +29,7 @@ describe('Notifications', () => {
   it('should return no channels', () => {
     return fetchChannelList(client)
       .then(channels => {
-        channels.should.be.Array;
+        channels.should.be.Array; // eslint-disable-line no-unused-expressions
         channels.should.be.length(0);
       });
   });
@@ -37,8 +37,8 @@ describe('Notifications', () => {
   it('should have channel sse-tech', () => {
     return addChannel('sse-tech', client)
       .then(() => fetchChannelList(client))
-      .then((channels) => {
-        channels.should.be.Array;
+      .then(channels => {
+        channels.should.be.Array; // eslint-disable-line no-unused-expressions
         channels.should.be.length(1);
         channels[0].should.be.eql('sse-tech');
       });
@@ -49,8 +49,8 @@ describe('Notifications', () => {
       .then(() => addChannel('sse-another', client))
       .then(() => addChannel('officers', client))
       .then(() => fetchChannelList(client))
-      .then((channels) => {
-        channels.should.be.Array;
+      .then(channels => {
+        channels.should.be.Array; // eslint-disable-line no-unused-expressions
         channels.should.be.length(3);
       });
   });
