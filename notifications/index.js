@@ -2,12 +2,12 @@ import {
   createClient,
 } from 'redis';
 
-let sub = undefined;
-let client = undefined;
+let sub;
+let client;
 
 function redisConns() {
-    sub = createClient('redis://redis:6379');
-    client = createClient('redis://redis:6379');
+  sub = createClient('redis://redis:6379');
+  client = createClient('redis://redis:6379');
 }
 
 function sendMessageToChannel(text, channel, slushbot) {
@@ -40,7 +40,7 @@ export function fetchChannelList(redis) {
 }
 
 export default function registerNotifications(slushbot) {
-  if (sub === undefined || client === undefined) {
+  if (!sub || !client) {
     redisConns();
   }
   sub.on('message', (chan, msg) => {
