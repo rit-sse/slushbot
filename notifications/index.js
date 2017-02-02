@@ -2,6 +2,14 @@ import {
   createClient,
 } from 'redis';
 
+let sub = undefined;
+let client = undefined;
+
+function redisConns() {
+    sub = createClient('redis://redis:6379');
+    client = createClient('redis://redis:6379');
+}
+
 function sendMessageToChannel(text, channel, slushbot) {
   console.log('sending to: ' + channel);
   slushbot.api.chat.postMessage({
@@ -32,8 +40,9 @@ export function fetchChannelList(redis) {
 }
 
 export default function registerNotifications(slushbot) {
-  const sub = createClient('redis://redis:6379');
-  const client = createClient('redis://redis:6379');
+  if (sub === undefined || client === undefined) {
+    redisConns();
+  }
   sub.on('message', (chan, msg) => {
     console.log('notification on events: ' + msg);
     fetchChannelList(client)
