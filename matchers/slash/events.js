@@ -16,6 +16,7 @@ const matcher = {
     if (matchCommand) {
       client.set('events::' + message.channel, true);
       bot.replyPublic(message, 'Adding ' + message.channel + ' to event creation notifications');
+    }
   },
 };
 
