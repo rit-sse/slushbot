@@ -2,8 +2,9 @@ import MatcherRegister from '../../matcher-register';
 import {
   createClient,
 } from 'redis';
+import nconf from '../../config';
 
-const client = createClient('redis://redis:6379');
+const client = createClient(nconf.get('redis'));
 
 const matcher = {
   name: 'events',

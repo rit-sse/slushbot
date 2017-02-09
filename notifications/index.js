@@ -1,13 +1,14 @@
 import {
   createClient,
 } from 'redis';
+import nconf from '../config';
 
 let sub;
 let client;
 
 function redisConns() {
-  sub = createClient('redis://redis:6379');
-  client = createClient('redis://redis:6379');
+  sub = createClient(nconf.get('redis'));
+  client = createClient(nconf.get('redis'));
 }
 
 function sendMessageToChannel(text, channel, slushbot) {

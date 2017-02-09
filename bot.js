@@ -11,7 +11,7 @@ if (!nconf.get('SLACK_BOT_TOKEN') || !nconf.get('SLACK_SLASH_TOKEN')) {
 
 const controller = Botkit.slackbot({
   debug: false,
-  storage: redisStore({ url: 'redis://redis:6379' }),
+  storage: redisStore({ url: nconf.get('redis') }),
 });
 
 export const slushbot = controller.spawn({ token: nconf.get('SLACK_BOT_TOKEN') });
