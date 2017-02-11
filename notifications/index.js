@@ -1,60 +1,10 @@
-import {
-  createClient,
-} from 'redis';
-import nconf from '../config';
-
-let sub;
-let client;
-
-function redisConns() {
-  sub = createClient(nconf.get('redis'));
-  client = createClient(nconf.get('redis'));
-}
-
-function sendMessageToChannel(text, channel, slushbot) {
-  console.log('sending to: ' + channel);
-  slushbot.api.chat.postMessage({
-    text,
-    channel,
-    as_user: true,  // eslint-disable-line camelcase
-  }, (err, res) => {
-    if (!err) {
-      console.log(res);
-    } else {
-      console.log(err);
-    }
-  });
-}
-
-export function fetchChannelList(redis) {
-  console.log('fetching channels for events');
-  return new Promise((accept, reject) => {
-    redis.keys('events::*', (err, values) => {
-      if (!err) {
-        const names = values.map(keyname => keyname.split('::')[1]);
-        accept(names);
-      } else {
-        reject(err);
-      }
-    });
-  });
-}
+import events from './events';
+import quotes from './quotes';
+import memberships from './memberships';
+import register from './helpers';
 
 export default function registerNotifications(slushbot) {
-  if (!sub || !client) {
-    redisConns();
-  }
-  sub.on('message', (chan, msg) => {
-    console.log('notification on events: ' + msg);
-    fetchChannelList(client)
-      .then(channels => {
-        console.log('channel list: ' + channels);
-        channels.map(channel => {
-          sendMessageToChannel(msg, channel, slushbot);
-        });
-      })
-      .catch(err => console.err(err));
-  });
-  // Sub
-  sub.subscribe('events');
+  register(slushbot, 'events', events);
+  register(slushbot, 'quotes', quotes);
+  register(slushbot, 'memberships', memberships);
 }

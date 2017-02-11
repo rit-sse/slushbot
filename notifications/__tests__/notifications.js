@@ -1,5 +1,6 @@
-import { fetchChannelList } from '../';
+import { fetchChannelList } from '../helpers';
 import { createClient } from 'redis';
+import  nconf from '../../config';
 import 'should';
 
 function addChannel(name, client) {
@@ -16,7 +17,7 @@ function addChannel(name, client) {
 
 describe('Notifications', () => {
 
-  const client = createClient('redis://redis:6379');
+  const client = createClient(nconf.get('redis'));
 
   beforeAll(() => {
     client.flushall();
@@ -27,7 +28,7 @@ describe('Notifications', () => {
   });
 
   it('should return no channels', () => {
-    return fetchChannelList(client)
+    return fetchChannelList(client, 'events')
       .then(channels => {
         channels.should.be.Array; // eslint-disable-line no-unused-expressions
         channels.should.be.length(0);
@@ -36,7 +37,7 @@ describe('Notifications', () => {
 
   it('should have channel sse-tech', () => {
     return addChannel('sse-tech', client)
-      .then(() => fetchChannelList(client))
+      .then(() => fetchChannelList(client, 'events'))
       .then(channels => {
         channels.should.be.Array; // eslint-disable-line no-unused-expressions
         channels.should.be.length(1);
@@ -48,7 +49,7 @@ describe('Notifications', () => {
     return addChannel('sse-tech', client)
       .then(() => addChannel('sse-another', client))
       .then(() => addChannel('officers', client))
-      .then(() => fetchChannelList(client))
+      .then(() => fetchChannelList(client, 'events'))
       .then(channels => {
         channels.should.be.Array; // eslint-disable-line no-unused-expressions
         channels.should.be.length(3);
