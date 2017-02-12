@@ -30,15 +30,17 @@ export default function registerNotifications(slushbot, table, sendMessageToChan
     redisConns();
   }
   sub.on('message', (chan, msg) => {
-    console.log(`notification on ${table}: ${msg}`);
-    fetchChannelList(client, table)
-      .then(channels => {
-        console.log(`channel list: ${channels}`);
-        channels.map(channel => {
-          sendMessageToChannel(msg, channel, slushbot);
-        });
-      })
-      .catch(err => console.err(err));
+    if (chan === table) {
+      console.log(`notification on ${chan}: ${msg}`);
+      fetchChannelList(client, chan)
+        .then(channels => {
+          console.log(`channel list: ${channels}`);
+          channels.map(channel => {
+            sendMessageToChannel(msg, channel, slushbot);
+          });
+        })
+        .catch(err => console.err(err));
+    }
   });
   // Sub
   sub.subscribe(table);
