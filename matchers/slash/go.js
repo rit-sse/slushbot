@@ -1,6 +1,5 @@
 import MatcherRegister from '../../matcher-register';
 import getAPI from '../../api';
-import { slushbot } from '../../bot';
 import nconf from '../../config';
 
 const matcher = {
@@ -22,7 +21,7 @@ const matcher = {
 
       // The slash command bot does not have the proper permissions to access
       // the slack web api
-      slushbot.api.users.info({ user: message.user_id }, (err, res) => {
+      bot.api.users.info({ user: message.user_id }, (err, res) => {
         if (err) {
           return bot.replyPrivate(message, 'There was an error getting your user information');
         }
