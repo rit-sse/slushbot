@@ -68,7 +68,7 @@ controller.setupWebserver(nconf.get('PORT') || 3000, (err, expressWebserver) => 
 });
 
 controller.on('slash_command', (bot, message) => {
-  if (message.token === nconf.get('SLACK_SLASH_TOKEN')) {
+  if (message.token === nconf.get('SLACK_SLASH_TOKEN') && message.team_domain === nconf.get('SLACK_TEAM')) {
     Object.values(Matchers.slash).forEach(matcher => matcher.match(bot, message));
   }
 });

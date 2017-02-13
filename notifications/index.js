@@ -11,7 +11,9 @@ export default function registerNotifications(slushbot) {
 
 export function handleInteractiveMessages(controller) {
   controller.on('interactive_message_callback', (bot, message) => {
-    handleQuoteResponse(bot, message);
-    handleMembershipResponse(bot, message);
+    if (message.token === nconf.get('SLACK_SLASH_TOKEN') && message.team_domain === nconf.get('SLACK_TEAM')) {
+      handleQuoteResponse(bot, message);
+      handleMembershipResponse(bot, message);
+    }
   });
 }
