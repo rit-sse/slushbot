@@ -2,7 +2,7 @@ import Botkit from 'botkit';
 import redisStore from 'botkit-storage-redis';
 import Matchers from './matcher-register';
 import setupMatchers from './matchers';
-import registerNotifications from './notifications';
+import registerNotifications, { handleInteractiveMessages } from './notifications';
 import nconf from './config';
 
 if (!nconf.get('SLACK_CLIENT_ID') || !nconf.get('SLACK_CLIENT_SECRET') ||  !nconf.get('SLACK_SLASH_TOKEN')) {
@@ -72,6 +72,8 @@ controller.on('slash_command', (bot, message) => {
     Object.values(Matchers.slash).forEach(matcher => matcher.match(bot, message));
   }
 });
+
+handleInteractiveMessages(controller);
 
 controller.storage.teams.all((err, teams) => {
   if (err) {
