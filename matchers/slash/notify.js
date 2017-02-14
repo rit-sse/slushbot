@@ -16,11 +16,12 @@ const matcher = {
     const matchCommand = message.text.match(/notify (events|memberships|quotes) (subscribe|unsubscribe)/);
     if (matchCommand) {
       if (matchCommand[2] === 'subscribe') {
+        console.log(message);
         client.set(`${matchCommand[1]}::${message.channel}`, true);
-        bot.replyPublic(message, `Adding ${message.channel} to ${matchCommand[1]} creation notifications`);
+        bot.replyPublic(message, `Adding ${message.channel_name} to ${matchCommand[1]} creation notifications`);
       } else {
         client.del(`${matchCommand[1]}::${message.channel}`);
-        bot.replyPublic(message, `Removing ${message.channel} from ${matchCommand[1]} creation notifications`);
+        bot.replyPublic(message, `Removing ${message.channel_name} from ${matchCommand[1]} creation notifications`);
       }
     }
   },

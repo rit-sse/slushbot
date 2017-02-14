@@ -1,6 +1,5 @@
 import MatcherRegister from '../../matcher-register';
 import getAPI from '../../api';
-import { slushbot } from '../../bot';
 import nconf from '../../config';
 
 const matcher = {
@@ -42,7 +41,7 @@ const matcher = {
         }
         return bot.replyPrivate(message, 'Invalid qdb command - run /sse help qdb for detailed usage');
       }
-      slushbot.api.users.info({ user: message.user_id }, (err, res) => {
+      bot.api.users.info({ user: message.user_id }, (err, res) => {
         if (err) {
           return bot.replyPrivate(message, 'There was an error getting your user information');
         }
@@ -60,7 +59,7 @@ const matcher = {
 
           startConversation() {
             bot.replyPrivate(message, 'Go to your direct message with me to continue adding the quote');
-            slushbot.startPrivateConversation(message, add.askBody);
+            bot.startPrivateConversation(message, add.askBody);
           },
 
           askBody(response, convo) {
@@ -104,7 +103,7 @@ const matcher = {
         const approve = {
           startConversation() {
             bot.replyPrivate(message, 'Go to your direct message with me to approve quotes');
-            slushbot.startPrivateConversation(message, approve.promptQuotes);
+            bot.startPrivateConversation(message, approve.promptQuotes);
           },
 
           promptQuotes(response, convo) {
