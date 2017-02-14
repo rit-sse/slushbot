@@ -17,7 +17,7 @@ const controller = Botkit.slackbot({
 controller.configureSlackApp({
   clientId: nconf.get('SLACK_CLIENT_ID'),
   clientSecret: nconf.get('SLACK_CLIENT_SECRET'),
-  redirectUri: 'https://b4c0d65c.ngrok.io/oauth',
+  redirectUri: 'https://sse.rit.edu/slack/oauth',
   scopes: [
     'commands',
     'bot',
