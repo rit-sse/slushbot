@@ -1,6 +1,5 @@
 import MatcherRegister from '../../matcher-register';
 import getAPI from '../../api';
-import { slushbot } from '../../bot';
 
 function getMemberships(dce, bot, message, Memberships) {
   return Memberships
@@ -31,7 +30,7 @@ const matcher = {
       const [, dce] = matchCommand;
 
       if (!dce) {
-        slushbot.api.users.info({ user: message.user_id }, (err, res) => {
+        bot.api.users.info({ user: message.user_id }, (err, res) => {
           if (err) {
             return bot.replyPrivate(message, 'There was an error getting your user infomation');
           }

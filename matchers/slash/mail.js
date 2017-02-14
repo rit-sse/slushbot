@@ -1,5 +1,4 @@
 import MatcherRegister from '../../matcher-register';
-import { slushbot } from '../../bot';
 import nconf from '../../config';
 import fetch from 'node-fetch';
 import crypto from 'crypto';
@@ -28,7 +27,7 @@ const matcher = {
     const match = message.text.match(/mail (subscribe|unsubscribe)\s?(.*)/);
     if (match) {
       const url = `https://anystring:${nconf.get('MAILCHIMP_KEY')}@us2.api.mailchimp.com/3.0/lists/${nconf.get('MAILCHIMP_LIST_ID')}/members`;
-      slushbot.api.users.info({ user: message.user_id }, (err, res) => {
+      bot.api.users.info({ user: message.user_id }, (err, res) => {
         if (err) {
           return bot.replyPrivate(message, 'There was an error getting your user information');
         }
