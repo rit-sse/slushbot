@@ -23,6 +23,7 @@ deployment:
       - docker tag ritsse/slushbot:$CIRCLE_BRANCH ritsse/slushbot
       - docker push ritsse/slushbot 
   release:
+    branch: master
     commands:
       - docker tag ritsse/slushbot:$CIRCLE_TAG ritsse/slushbot
       - docker push ritsse/slushbot 
