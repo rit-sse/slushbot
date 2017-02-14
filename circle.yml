@@ -13,7 +13,7 @@ test:
 
 deployment:
   development:
-    branch: devlop
+    branch: development
     commands:
       - docker push ritsse/slushbot:$CIRCLE_BRANCH
   master:
@@ -22,4 +22,8 @@ deployment:
     commands:
       - docker tag ritsse/slushbot:$CIRCLE_BRANCH ritsse/slushbot
       - docker push ritsse/slushbot 
-
+  release:
+    branch: master
+    commands:
+      - docker tag ritsse/slushbot:$CIRCLE_TAG ritsse/slushbot
+      - docker push ritsse/slushbot 
