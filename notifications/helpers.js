@@ -39,7 +39,7 @@ export default function registerNotifications(slushbot, table, sendMessageToChan
             sendMessageToChannel(msg, channel, slushbot);
           });
         })
-        .catch(err => console.err(err));
+        .catch(err => console.error(err));
     }
   });
   // Sub
