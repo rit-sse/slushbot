@@ -1,4 +1,4 @@
-import moment from 'moment';
+import moment from 'moment-timezone';
 
 export default function sendMessageToChannel(text, channel, slushbot) {
   console.log(`sending to: ${channel}`);
@@ -28,12 +28,12 @@ export default function sendMessageToChannel(text, channel, slushbot) {
           },
           {
             title: 'Start Date',
-            value: moment(event.startDate).format('MMMM D, h:mm a'),
+            value: moment(event.startDate).tz('America/New_York').format('MMMM D, h:mm a'),
             short: true,
           },
           {
             title: 'End Date',
-            value: moment(event.endDate).format('MMMM D, h:mm a'),
+            value: moment(event.endDate).tz('America/New_York').format('MMMM D, h:mm a'),
             short: true,
           },
         ],
