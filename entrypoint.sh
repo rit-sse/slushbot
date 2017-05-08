@@ -27,9 +27,4 @@ file_env 'SLACK_CLIENT_ID' ''
 file_env 'SLACK_CLIENT_SECRET' ''
 file_env 'SLACK_SLASH_TOKEN' ''
 
-if [ $# -eq 0 ]
-then
-	npm start
-else
-	exec $@
-fi;
+exec $@;

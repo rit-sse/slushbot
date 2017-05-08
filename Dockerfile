@@ -8,4 +8,6 @@ COPY ./ /app
 
 EXPOSE 3000
 
-ENTRYPOINT /app/entrypoint.sh
+ENTRYPOINT ["/app/entrypoint.sh"]
+
+CMD ["npm", "start"]
