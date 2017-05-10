@@ -8,7 +8,11 @@ const matcher = {
 
   match(controller) {
     controller.hears("I['|’]m (.+)", 'ambient', (bot, message) => {
-      bot.reply(message, `Hi ${message.match[1]}, I'm Slushbot!`);
+      const trigger = message.text;
+      const words = trigger.split(' ');
+      if (words[0] === "I'm") {
+        bot.reply(message, `Hi ${message.match[1]}, I'm Slushbot!`);
+      }
     });
   },
 };
